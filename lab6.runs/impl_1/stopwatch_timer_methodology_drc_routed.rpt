@@ -1,0 +1,48 @@
+Copyright 1986-2022 Xilinx, Inc. All Rights Reserved. Copyright 2022-2024 Advanced Micro Devices, Inc. All Rights Reserved.
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+| Tool Version : Vivado v.2024.1 (win64) Build 5076996 Wed May 22 18:37:14 MDT 2024
+| Date         : Tue Nov 19 18:02:30 2024
+| Host         : MSI running 64-bit major release  (build 9200)
+| Command      : report_methodology -file stopwatch_timer_methodology_drc_routed.rpt -pb stopwatch_timer_methodology_drc_routed.pb -rpx stopwatch_timer_methodology_drc_routed.rpx
+| Design       : stopwatch_timer
+| Device       : xc7a35tcpg236-1
+| Speed File   : -1
+| Design State : Fully Routed
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Report Methodology
+
+Table of Contents
+-----------------
+1. REPORT SUMMARY
+2. REPORT DETAILS
+
+1. REPORT SUMMARY
+-----------------
+            Netlist: netlist
+          Floorplan: design_1
+      Design limits: <entire design considered>
+             Max violations: <unlimited>
+             Violations found: 2
++-----------+----------+------------------------------------------------------+------------+
+| Rule      | Severity | Description                                          | Violations |
++-----------+----------+------------------------------------------------------+------------+
+| TIMING-18 | Warning  | Missing input or output delay                        | 1          |
+| XDCC-4    | Warning  | User Clock constraint overwritten with the same name | 1          |
++-----------+----------+------------------------------------------------------+------------+
+
+2. REPORT DETAILS
+-----------------
+TIMING-18#1 Warning
+Missing input or output delay  
+An output delay is missing on a relative to the rising and/or falling clock edge(s) of sys_clk_pin.
+Related violations: <none>
+
+XDCC-4#1 Warning
+User Clock constraint overwritten with the same name  
+A new clock constraint create_clock overrides a previous user clock constraint with the same name.
+New: create_clock -period 10.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports clk] (Source: D:/School/2024-2025/digi logic/Lab3/Lab3.srcs/constrs_1/imports/Downloads/Basys3_Master.xdc (Line: 316))
+Previous: create_clock -period 1000000000.000 -name sys_clk_pin -waveform {0.000 5.000} -add [get_ports clk] (Source: D:/School/2024-2025/digi logic/Lab3/Lab3.srcs/constrs_1/imports/Downloads/Basys3_Master.xdc (Line: 14))
+Related violations: <none>
+
+
