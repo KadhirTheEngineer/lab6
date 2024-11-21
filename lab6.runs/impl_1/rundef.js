@@ -26,7 +26,7 @@ eval( EAInclude(ISEJScriptLib) );
 // pre-commands:
 ISETouchFile( "init_design", "begin" );
 ISEStep( "vivado",
-         "-log stopwatch_timer.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source stopwatch_timer.tcl -notrace" );
+         "-log stopwatch_top.vdi -applog -m64 -product Vivado -messageDb vivado.pb -mode batch -source stopwatch_top.tcl -notrace" );
 
 
 

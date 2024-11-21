@@ -1,0 +1,79 @@
+#-----------------------------------------------------------
+# Vivado v2024.1 (64-bit)
+# SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
+# IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
+# SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
+# Start of session at: Wed Nov 20 18:49:44 2024
+# Process ID: 7336
+# Current directory: D:/School/2024-2025/digi logic/lab6/lab6.runs/impl_1
+# Command line: vivado.exe -log stopwatch_top.vdi -applog -product Vivado -messageDb vivado.pb -mode batch -source stopwatch_top.tcl -notrace
+# Log file: D:/School/2024-2025/digi logic/lab6/lab6.runs/impl_1/stopwatch_top.vdi
+# Journal file: D:/School/2024-2025/digi logic/lab6/lab6.runs/impl_1\vivado.jou
+# Running On        :MSI
+# Platform          :Windows Server 2016 or Windows 10
+# Operating System  :22635
+# Processor Detail  :Intel(R) Core(TM) i7-10750H CPU @ 2.60GHz
+# CPU Frequency     :2592 MHz
+# CPU Physical cores:6
+# CPU Logical cores :12
+# Host memory       :17063 MB
+# Swap memory       :12884 MB
+# Total Virtual     :29948 MB
+# Available Virtual :14694 MB
+#-----------------------------------------------------------
+source stopwatch_top.tcl -notrace
+create_project: Time (s): cpu = 00:00:05 ; elapsed = 00:00:07 . Memory (MB): peak = 487.656 ; gain = 202.383
+Command: link_design -top stopwatch_top -part xc7a35tcpg236-1
+Design is defaulting to srcset: sources_1
+Design is defaulting to constrset: constrs_1
+INFO: [Device 21-403] Loading part xc7a35tcpg236-1
+INFO: [Device 21-9227] Part: xc7a35tcpg236-1 does not have CEAM library.
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00.001 . Memory (MB): peak = 891.723 ; gain = 0.000
+INFO: [Netlist 29-17] Analyzing 10 Unisim elements for replacement
+INFO: [Netlist 29-28] Unisim Transformation completed in 0 CPU seconds
+INFO: [Project 1-479] Netlist was created with Vivado 2024.1
+INFO: [Project 1-570] Preparing netlist for logic optimization
+Parsing XDC File [D:/School/2024-2025/digi logic/Lab3/Lab3.srcs/constrs_1/imports/Downloads/Basys3_Master.xdc]
+Finished Parsing XDC File [D:/School/2024-2025/digi logic/Lab3/Lab3.srcs/constrs_1/imports/Downloads/Basys3_Master.xdc]
+INFO: [Opt 31-138] Pushed 0 inverter(s) to 0 load pin(s).
+Netlist sorting complete. Time (s): cpu = 00:00:00 ; elapsed = 00:00:00 . Memory (MB): peak = 1022.395 ; gain = 0.000
+INFO: [Project 1-111] Unisim Transformation Summary:
+No Unisim elements were transformed.
+
+8 Infos, 0 Warnings, 0 Critical Warnings and 0 Errors encountered.
+link_design completed successfully
+link_design: Time (s): cpu = 00:00:04 ; elapsed = 00:00:06 . Memory (MB): peak = 1027.352 ; gain = 539.695
+Command: opt_design
+Attempting to get a license for feature 'Implementation' and/or device 'xc7a35t'
+INFO: [Common 17-349] Got license for feature 'Implementation' and/or device 'xc7a35t'
+Running DRC as a precondition to command opt_design
+
+Starting DRC Task
+INFO: [DRC 23-27] Running DRC with 2 threads
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[0] has multiple drivers: time_count_reg[0]/Q, and time_count_reg[0]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[10] has multiple drivers: time_count_reg[10]/Q, and time_count_reg[10]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[11] has multiple drivers: time_count_reg[11]/Q, and time_count_reg[11]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[12] has multiple drivers: time_count_reg[12]/Q, and time_count_reg[12]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[13] has multiple drivers: time_count_reg[13]/Q, and time_count_reg[13]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[14] has multiple drivers: time_count_reg[14]/Q, and time_count_reg[14]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[15] has multiple drivers: time_count_reg[15]__0/Q, and time_count_reg[15]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[1] has multiple drivers: time_count_reg[1]/Q, and time_count_reg[1]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[2] has multiple drivers: time_count_reg[2]__0/Q, and time_count_reg[2]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[3] has multiple drivers: time_count_reg[3]__0/Q, and time_count_reg[3]/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[4] has multiple drivers: time_count_reg[4]/Q, and time_count_reg[4]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[5] has multiple drivers: time_count_reg[5]/Q, and time_count_reg[5]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[6] has multiple drivers: time_count_reg[6]/Q, and time_count_reg[6]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[7] has multiple drivers: time_count_reg[7]/Q, and time_count_reg[7]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[8] has multiple drivers: time_count_reg[8]/Q, and time_count_reg[8]__0/Q.
+ERROR: [DRC MDRV-1] Multiple Driver Nets: Net time_count[9] has multiple drivers: time_count_reg[9]/Q, and time_count_reg[9]__0/Q.
+INFO: [Project 1-461] DRC finished with 16 Errors
+INFO: [Project 1-462] Please refer to the DRC report (report_drc) for more information.
+ERROR: [Vivado_Tcl 4-78] Error(s) found during DRC. Opt_design not run.
+
+Time (s): cpu = 00:00:01 ; elapsed = 00:00:00.908 . Memory (MB): peak = 1052.004 ; gain = 24.652
+INFO: [Common 17-83] Releasing license: Implementation
+13 Infos, 0 Warnings, 0 Critical Warnings and 17 Errors encountered.
+opt_design failed
+ERROR: [Common 17-39] 'opt_design' failed due to earlier errors.
+
+INFO: [Common 17-206] Exiting Vivado at Wed Nov 20 18:49:58 2024...
