@@ -74,7 +74,6 @@ module stopwatch_top(
     end
 
     // Time counting logic
-
     always @(posedge slow_clk or posedge reset) begin
         if (reset) begin
             time_count <= 16'b0; // Reset to 00.00
@@ -110,30 +109,34 @@ module stopwatch_top(
                 end
                 2'b01: begin // Preload Stopwatch Mode (Increment to preset value)
                     if (running) begin
-                        if (time_count < preset_time) begin
-                            // Increment logic as above
-                            time_count[3:0] <= time_count[3:0] + 1;
-                            if (time_count[3:0] == 4'd9) begin
-                                time_count[3:0] <= 4'd0;
-                                time_count[7:4] <= time_count[7:4] + 1;
-    
-                                if (time_count[7:4] == 4'd9) begin
-                                    time_count[7:4] <= 4'd0;
-                                    time_count[11:8] <= time_count[11:8] + 1;
-    
-                                    if (time_count[11:8] == 4'd9) begin
-                                        time_count[11:8] <= 4'd0;
-                                        time_count[15:12] <= time_count[15:12] + 1;
-    
-                                        if (time_count[15:12] == 4'd9) begin
-                                            time_count[15:12] <= 4'd0; // Prevent overflow
+                        time_count[3:0] <= time_count[3:0] + 1;
+                        
+                        if (time_count[3:0] == 4'd9) 
+                            begin
+                            time_count[3:0] <= 4'd0;
+                            time_count[7:4] <= time_count[7:4] + 1; // Increment next digit
+                            
+                            if (time_count[7:4] == 4'd9) 
+                                begin
+                                time_count[7:4] <= 4'd0;
+                                time_count[11:8] <= time_count[11:8] + 1; // Increment next digit
+                                
+                                if (time_count[11:8] == 4'd9) 
+                                    begin
+                                    time_count[11:8] <= 4'd0;
+                                    time_count[15:12] <= time_count[15:12] + 1; // Increment next digit
+                                    
+                                    if (time_count[15:12] == 4'd9)
+                                        begin
+                                        time_count <= time_count; // no change
                                         end
                                     end
                                 end
-                            end
-                        end else begin
-                            time_count <= preset_time; // Stop at preset value
                         end
+                    end
+                    else begin 
+                        time_count[15:12] <= switches[7:4];
+                        time_count[11:8] <= switches[3:0];
                     end
                 end
                 2'b10: begin // Countdown Mode (Decrementing)
@@ -188,17 +191,17 @@ module stopwatch_top(
     
     
         // Load preset value from switches, but only when the timer/stopwatch is NOT running
-        always @(posedge clk or posedge reset) begin
-            if (reset) 
-                begin
-                preset_time <= 16'b0; // Reset preset time
-                end 
-            else if (!running && (mode == 2'b01 || mode == 2'b11))
-                begin
-                preset_time[15:12] <= switches[7:4];
-                preset_time[11:8] <= switches[3:0]; // Load time from switches when stopped
-            end
-        end
+//        always @(posedge clk or posedge reset) begin
+//            if (reset) 
+//                begin
+//                preset_time <= 16'b0; // Reset preset time
+//                end 
+//            else if (!running && (mode == 2'b01 || mode == 2'b11))
+//                begin
+//                preset_time[15:12] <= switches[7:4];
+//                preset_time[11:8] <= switches[3:0]; // Load time from switches when stopped
+//            end
+//        end
     
         // Multiplex the digits at a faster refresh rate
         always @(posedge clk or posedge reset) begin
@@ -240,9 +243,9 @@ module stopwatch_top(
     always @(*) begin
         debug = running;
         
-        if((mode == 2'b01 || mode == 2'b11) && ~running) begin
-            time_count <= preset_time;
-        end
+//        if((mode == 2'b01 || mode == 2'b11) && ~running) begin
+//            time_count <= preset_time;
+//        end
     end
 endmodule
 
