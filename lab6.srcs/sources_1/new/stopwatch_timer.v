@@ -140,6 +140,10 @@ module stopwatch_top(
                     end
                 end
                 2'b10: begin // Countdown Mode (Decrementing)
+                    if(time_count != 16'h9999)begin
+                        time_count <= 16'h9999;
+                    end
+                    
                     if (running && time_count > 0) begin
                         // Decrement the least significant digit
                         if (time_count[3:0] == 4'd0) begin
@@ -183,6 +187,10 @@ module stopwatch_top(
                         end else begin
                             time_count[3:0] <= time_count[3:0] - 1;
                         end
+                    end
+                    else begin 
+                        time_count[15:12] <= switches[7:4];
+                        time_count[11:8] <= switches[3:0];
                     end
                 end
             endcase
