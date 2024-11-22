@@ -14,25 +14,27 @@
 //////////////////////////////////////////////////////////////////////////////////
 module stopwatch_top(
     input clk,              // 100 MHz clock input
-    input reset,            // Reset button
+    input reset,            // Reset
     input start_stop,       // Start/Stop button
-    input [7:0] switches,   // 8 input switches for initializing time
-    input [1:0] mode,       // Mode selection (00: Stopwatch, 01: Preload Stopwatch, 10: Countdown, 11: Preload Timer)
-    output reg [3:0] an,    // 7-segment display anode control
-    output [6:0] seg,        // 7-segment display segments
-    output reg debug,
-    output reg dp
+    input [7:0] switches,   
+    input [1:0] mode,       
+    output reg [3:0] an,    
+    output [6:0] seg,        
+    output reg debug,       //debug 
+    output reg dp           //decimal point
 );
-    // Internal signals
-    reg [15:0] time_count;     // Current time in BCD (4 digits: [15:12][11:8][7:4][3:0])
-    //reg [15:0] preset_time;    // The preset value for preload modes
+    reg [15:0] time_count;     // Current time in BCD [15:12][11:8][7:4][3:0]
+    
     wire slow_clk;             // Clock divider for 10 ms updates
+    
     reg [1:0] digit_select;    // Selects which digit to display
     reg [3:0] current_digit;   // Currently selected digit for display
-    wire [6:0] seg_output;     // Output from num2display
-    reg running;               // Stopwatch running state
-    reg [2:0] start_stop_sync; // Synchronize the start/stop signal for debouncing
-    reg debounced_start_stop;  // Debounced start/stop signal
+    wire [6:0] seg_output;     // Output
+    
+    reg running;               // Flag to check if timer/stopwatch is running
+    
+    reg [2:0] start_stop_sync; 
+    reg debounced_start_stop;  
     reg [15:0] display_counter; // Counter for display multiplexing
 
     // Clock divider to generate a 10ms clock
@@ -77,27 +79,27 @@ module stopwatch_top(
     // Time counting logic
     always @(posedge slow_clk or posedge reset) begin
         if (reset) begin
-            time_count <= 16'b0; // Reset to 00.00
+            time_count <= 16'b0; 
         end else begin
             case (mode)
-                2'b00: begin // Regular Stopwatch Mode (Incrementing)
+                2'b00: begin 
                     if (running) begin
                         time_count[3:0] <= time_count[3:0] + 1;
                         
                         if (time_count[3:0] == 4'd9) 
                             begin
                             time_count[3:0] <= 4'd0;
-                            time_count[7:4] <= time_count[7:4] + 1; // Increment next digit
+                            time_count[7:4] <= time_count[7:4] + 1;
                             
                             if (time_count[7:4] == 4'd9) 
                                 begin
                                 time_count[7:4] <= 4'd0;
-                                time_count[11:8] <= time_count[11:8] + 1; // Increment next digit
+                                time_count[11:8] <= time_count[11:8] + 1; 
                                 
                                 if (time_count[11:8] == 4'd9) 
                                     begin
                                     time_count[11:8] <= 4'd0;
-                                    time_count[15:12] <= time_count[15:12] + 1; // Increment next digit
+                                    time_count[15:12] <= time_count[15:12] + 1; 
                                     
                                     if (time_count[15:12] == 4'd9)
                                         begin
@@ -108,24 +110,24 @@ module stopwatch_top(
                         end
                     end
                 end
-                2'b01: begin // Preload Stopwatch Mode (Increment from preset value)
+                2'b01: begin // Preload Stopwatch Mode
                     if (running) begin
                         time_count[3:0] <= time_count[3:0] + 1;
                         
                         if (time_count[3:0] == 4'd9) 
                             begin
                             time_count[3:0] <= 4'd0;
-                            time_count[7:4] <= time_count[7:4] + 1; // Increment next digit
+                            time_count[7:4] <= time_count[7:4] + 1; 
                             
                             if (time_count[7:4] == 4'd9) 
                                 begin
                                 time_count[7:4] <= 4'd0;
-                                time_count[11:8] <= time_count[11:8] + 1; // Increment next digit
+                                time_count[11:8] <= time_count[11:8] + 1; 
                                 
                                 if (time_count[11:8] == 4'd9) 
                                     begin
                                     time_count[11:8] <= 4'd0;
-                                    time_count[15:12] <= time_count[15:12] + 1; // Increment next digit
+                                    time_count[15:12] <= time_count[15:12] + 1; 
                                     
                                     if (time_count[15:12] == 4'd9)
                                         begin
@@ -140,13 +142,12 @@ module stopwatch_top(
                         time_count[11:8] <= switches[3:0];
                     end
                 end
-                2'b10: begin // Countdown Mode (Decrementing)
+                2'b10: begin // Countdown Mode 
                     if((time_count != 16'h9999) && ~running)begin
                         time_count <= 16'h9999;
                     end
                     
                     if (running && time_count > 0) begin
-                        // Decrement the least significant digit
                         if (time_count[3:0] == 4'd0) begin
                             time_count[3:0] <= 4'd9;
                             if (time_count[7:4] == 4'd0) begin
@@ -167,9 +168,8 @@ module stopwatch_top(
                         end
                     end
                 end
-                2'b11: begin // Preload Timer Mode (Countdown to 0)
+                2'b11: begin // Preload Timer Mode 
                     if (running && time_count > 0) begin
-                        // Decrement logic as above
                         if (time_count[3:0] == 4'd0) begin
                             time_count[3:0] <= 4'd9;
                             if (time_count[7:4] == 4'd0) begin
@@ -200,31 +200,16 @@ module stopwatch_top(
             endcase
         end
     end
-    
-    
-        // Load preset value from switches, but only when the timer/stopwatch is NOT running
-//        always @(posedge clk or posedge reset) begin
-//            if (reset) 
-//                begin
-//                preset_time <= 16'b0; // Reset preset time
-//                end 
-//            else if (!running && (mode == 2'b01 || mode == 2'b11))
-//                begin
-//                preset_time[15:12] <= switches[7:4];
-//                preset_time[11:8] <= switches[3:0]; // Load time from switches when stopped
-//            end
-//        end
-    
-        // Multiplex the digits at a faster refresh rate
+
         always @(posedge clk or posedge reset) begin
             if (reset) begin
                 display_counter <= 16'b0;
                 digit_select <= 2'b00;
             end else begin
-                display_counter <= display_counter + 1; // Increment display counter
+                display_counter <= display_counter + 1; 
                 if (display_counter == 16'b1111111111111111) begin
-                    digit_select <= digit_select + 1; // Cycle through digits
-                    display_counter <= 16'b0; // Reset display counter
+                    digit_select <= digit_select + 1;
+                    display_counter <= 16'b0; 
                 end
             end
         end
@@ -233,24 +218,24 @@ module stopwatch_top(
     always @(*) begin
         case (digit_select)
             2'b00: begin
-                current_digit = time_count[3:0];  // Least significant digit
+                current_digit = time_count[3:0];  
                 an = 4'b1110;
-                dp = 1;                    // Enable corresponding display
+                dp = 1;                    
             end
             2'b01: begin
-                current_digit = time_count[7:4]; // Next digit
+                current_digit = time_count[7:4]; 
                 an = 4'b1101;   
-                dp = 1;                 // Enable corresponding display
+                dp = 1;                 
             end
             2'b10: begin
-                current_digit = time_count[11:8]; // Seconds (ones place)
+                current_digit = time_count[11:8]; 
                 an = 4'b1011; 
-                dp = 0;                    // Enable corresponding display
+                dp = 0;                    
             end
             2'b11: begin
-                current_digit = time_count[15:12]; // Seconds (tens place)
+                current_digit = time_count[15:12]; 
                 an = 4'b0111; 
-                dp = 1;                     // Enable corresponding display
+                dp = 1;                     
             end
         endcase
     end
@@ -265,9 +250,7 @@ module stopwatch_top(
     end
 endmodule
 
-//////////////////////////////////////////////////////////////////////////////////
 // Clock Divider Module
-//////////////////////////////////////////////////////////////////////////////////
 module clk_div(
     input clk,
     input reset,
@@ -280,7 +263,7 @@ module clk_div(
         if (reset) begin
             COUNT <= 0;
             slow_clk <= 0;
-        end else if (COUNT == 499999) begin
+        end else if (COUNT == 499999) begin //1 ms clock
             COUNT <= 0;
             slow_clk <= ~slow_clk; 
         end else begin
@@ -289,9 +272,7 @@ module clk_div(
     end
 endmodule
 
-//////////////////////////////////////////////////////////////////////////////////
 // num2display Module
-//////////////////////////////////////////////////////////////////////////////////
 module num2display(
     input [3:0] num,
     output reg [6:0] disp

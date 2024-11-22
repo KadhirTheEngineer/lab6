@@ -1,45 +1,15 @@
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="23312" HostCore="12" HostMemory="017063727104">
+    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="40908" HostCore="12" HostMemory="017063727104">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="10196" HostCore="12" HostMemory="017063727104">
+    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="33412" HostCore="12" HostMemory="017063727104">
     </Process>
 </ProcessHandle>
 <?xml version="1.0"?>
 <ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="4708" HostCore="12" HostMemory="017063727104">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="33512" HostCore="12" HostMemory="017063727104">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="26028" HostCore="12" HostMemory="017063727104">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="31716" HostCore="12" HostMemory="017063727104">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="16456" HostCore="12" HostMemory="017063727104">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="33528" HostCore="12" HostMemory="017063727104">
-    </Process>
-</ProcessHandle>
-<?xml version="1.0"?>
-<ProcessHandle Version="1" Minor="0">
-    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="6760" HostCore="12" HostMemory="017063727104">
+    <Process Command="vivado.bat" Owner="kadhi" Host="MSI" Pid="7128" HostCore="12" HostMemory="017063727104">
     </Process>
 </ProcessHandle>
