@@ -3,8 +3,8 @@
 # SW Build 5076996 on Wed May 22 18:37:14 MDT 2024
 # IP Build 5075265 on Wed May 22 21:45:21 MDT 2024
 # SharedData Build 5076995 on Wed May 22 18:29:18 MDT 2024
-# Start of session at: Thu Nov 21 12:04:20 2024
-# Process ID: 33680
+# Start of session at: Fri Nov 22 11:30:32 2024
+# Process ID: 38628
 # Current directory: D:/School/2024-2025/digi logic/lab6/lab6.runs/synth_1
 # Command line: vivado.exe -log stopwatch_top.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source stopwatch_top.tcl
 # Log file: D:/School/2024-2025/digi logic/lab6/lab6.runs/synth_1/stopwatch_top.vds
@@ -17,8 +17,8 @@
 # CPU Physical cores:6
 # CPU Logical cores :12
 # Host memory       :17063 MB
-# Swap memory       :12884 MB
-# Total Virtual     :29948 MB
-# Available Virtual :6921 MB
+# Swap memory       :13810 MB
+# Total Virtual     :30874 MB
+# Available Virtual :6157 MB
 #-----------------------------------------------------------
 source stopwatch_top.tcl -notrace

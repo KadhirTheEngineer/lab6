@@ -20,11 +20,12 @@ module stopwatch_top(
     input [1:0] mode,       // Mode selection (00: Stopwatch, 01: Preload Stopwatch, 10: Countdown, 11: Preload Timer)
     output reg [3:0] an,    // 7-segment display anode control
     output [6:0] seg,        // 7-segment display segments
-    output reg debug
+    output reg debug,
+    output reg dp
 );
     // Internal signals
     reg [15:0] time_count;     // Current time in BCD (4 digits: [15:12][11:8][7:4][3:0])
-    reg [15:0] preset_time;    // The preset value for preload modes
+    //reg [15:0] preset_time;    // The preset value for preload modes
     wire slow_clk;             // Clock divider for 10 ms updates
     reg [1:0] digit_select;    // Selects which digit to display
     reg [3:0] current_digit;   // Currently selected digit for display
@@ -107,7 +108,7 @@ module stopwatch_top(
                         end
                     end
                 end
-                2'b01: begin // Preload Stopwatch Mode (Increment to preset value)
+                2'b01: begin // Preload Stopwatch Mode (Increment from preset value)
                     if (running) begin
                         time_count[3:0] <= time_count[3:0] + 1;
                         
@@ -140,7 +141,7 @@ module stopwatch_top(
                     end
                 end
                 2'b10: begin // Countdown Mode (Decrementing)
-                    if(time_count != 16'h9999)begin
+                    if((time_count != 16'h9999) && ~running)begin
                         time_count <= 16'h9999;
                     end
                     
@@ -185,13 +186,16 @@ module stopwatch_top(
                                 time_count[7:4] <= time_count[7:4] - 1;
                             end
                         end else begin
-                            time_count[3:0] <= time_count[3:0] - 1;
+                            time_count[3:0] <= time_count[3:0] - 1;                                    
                         end
                     end
-                    else begin 
+                    else if(~running) begin 
                         time_count[15:12] <= switches[7:4];
                         time_count[11:8] <= switches[3:0];
-                    end
+                        time_count[7:0] = 0;
+                    end else begin
+                        time_count <= time_count;
+                        end
                 end
             endcase
         end
@@ -230,19 +234,23 @@ module stopwatch_top(
         case (digit_select)
             2'b00: begin
                 current_digit = time_count[3:0];  // Least significant digit
-                an = 4'b1110;                    // Enable corresponding display
+                an = 4'b1110;
+                dp = 1;                    // Enable corresponding display
             end
             2'b01: begin
                 current_digit = time_count[7:4]; // Next digit
-                an = 4'b1101;                    // Enable corresponding display
+                an = 4'b1101;   
+                dp = 1;                 // Enable corresponding display
             end
             2'b10: begin
                 current_digit = time_count[11:8]; // Seconds (ones place)
-                an = 4'b1011;                     // Enable corresponding display
+                an = 4'b1011; 
+                dp = 0;                    // Enable corresponding display
             end
             2'b11: begin
                 current_digit = time_count[15:12]; // Seconds (tens place)
-                an = 4'b0111;                      // Enable corresponding display
+                an = 4'b0111; 
+                dp = 1;                     // Enable corresponding display
             end
         endcase
     end
